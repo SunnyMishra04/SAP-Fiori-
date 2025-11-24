@@ -39,8 +39,5 @@ An SAP Fiori application.
 #### Pre-requisites:
 
 1. Active NodeJS LTS (Long Term Support) version and associated supported NPM version.  (See https://nodejs.org)
-
-
-
 Stuff Related to SAP UI5 Fiori
 >>>>>>> 8bea428db038e794098aba641cc31f11329a3058
