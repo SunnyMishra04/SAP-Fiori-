@@ -1,0 +1,7 @@
+/* Enter your custom styles here */
+
+.homeBtnText .sapMBtnInner {
+    color: black !important;
+    font  :700;
+    font-size: larger;
+}
