@@ -8,7 +8,14 @@ sap.ui.define([
  
  
  console.log("View1 Controller Loaded");
+var script = document.createElement('script');
+  script.id = "cai-webchat";
+  
+script.src="https://cdn.cai.tools.sap/webchat/webchat.js"
+script.setAttribute('channelID' ,' 0c2a070f-18a3-443c-abe0-5664500a45b5')
+script.setAttribute('token','f51f7ee25df895b6a21dd0cf8aacf185')
 
+ document.body.appendChild(script);
  
  
         },
