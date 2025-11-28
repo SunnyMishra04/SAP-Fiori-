@@ -11,7 +11,7 @@ sap.ui.define([
     onInit: function () {
       console.log("View1 Controller Loaded");
 
-      // Create script tag only once
+      // Chatbot script load once
       if (!document.getElementById("cai-webchat")) {
         var s = document.createElement("script");
         s.id = "cai-webchat";
@@ -23,7 +23,7 @@ sap.ui.define([
             channelId: "0c2a070f-18a3-443c-abe0-5664500a45b5",
             token: "f51f7ee25df895b6a21dd0cf8aacf185",
             settings: {
-              startBehavior: "button", // show small button, click to open/minimize
+              startBehavior: "button",
               side: "right",
               marginX: 20,
               marginY: 20,
@@ -36,14 +36,49 @@ sap.ui.define([
 
         document.body.appendChild(s);
       }
+
+      // VizFrame configs
+      var oColumn = this.byId("orderChartColumn");
+      if (oColumn) {
+        oColumn.setVizProperties({
+          plotArea: { dataLabel: { visible: true } },
+          legend: { visible: true },
+          title: { visible: true, text: "Quantity by Product (Column)" }
+        });
+      }
+
+      var oDonut = this.byId("orderChartDonut");
+      if (oDonut) {
+        oDonut.setVizProperties({
+          plotArea: { dataLabel: { visible: true } },
+          legend: { visible: true },
+          title: { visible: true, text: "Quantity Share by Product (Donut)" }
+        });
+      }
     },
 
     onListPress: function (oEvent) {
       var orderID = oEvent.getParameter("listItem")
         .getBindingContext().getProperty("OrderID");
+
       var oFilter = new Filter("OrderID", FilterOperator.EQ, orderID);
-      var orderTable = this.getView().byId("orderTable");
-      orderTable.getBinding("items").filter(oFilter, FilterType.Application);
+
+      // Filter table
+      var oTable = this.byId("orderTable");
+      if (oTable && oTable.getBinding("items")) {
+        oTable.getBinding("items").filter(oFilter, FilterType.Application);
+      }
+
+      // Filter charts' datasets
+      var oColumn = this.byId("orderChartColumn");
+      if (oColumn && oColumn.getDataset().getBinding("data")) {
+        oColumn.getDataset().getBinding("data").filter([oFilter]);
+      }
+
+      var oDonut = this.byId("orderChartDonut");
+      if (oDonut && oDonut.getDataset().getBinding("data")) {
+        oDonut.getDataset().getBinding("data").filter([oFilter]);
+      }
     },
 
     onHomePress: function () {
